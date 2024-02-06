@@ -11,10 +11,11 @@
     "url": "git+https://github.com/kalviumcommunity/S50LaughLens.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "shahabas",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/kalviumcommunity/S50LaughLens/issues"
   },
-  "homepage": "https://github.com/kalviumcommunity/S50LaughLens#readme"
+  "homepage": "https://github.com/kalviumcommunity/S50LaughLens#readme",
+  "PRdiff" : "sample"
 }
