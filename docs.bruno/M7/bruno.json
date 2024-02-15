@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "LaughLens",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
