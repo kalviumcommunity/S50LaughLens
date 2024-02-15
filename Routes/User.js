@@ -7,10 +7,11 @@ router.get("/users", async (req, res) => {
         const data = await userModel.find();
         res.json(data);
     } catch (error) {
-        // console.log(error); 
-        res.status(500).send("An error occurred");
+        console.error("An error occurred:", error);
+        res.status(500).json({ error: "An error occurred" });
     }
 });
+
 
 
 module.exports = router;
