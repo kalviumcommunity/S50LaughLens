@@ -4,17 +4,21 @@ const postModel = require("../Schema/PostModel");
 
 router.use(express.json());
 
-router.get("/posts", async (req, res) => {
+const errorHandler = (error, req, res, next) => {
+  console.error("An error occurred:", error);
+  res.status(500).json({ error: "Server Error" });
+};
+
+router.get("/posts", async (req, res, next) => {
   try {
     const data = await postModel.find();
     res.json(data);
   } catch (error) {
-    console.error("An error occurred while fetching posts:", error);
-    res.status(500).json({ error: "Server Error while fetching posts" });
+    next(error);
   }
 });
 
-router.get("/posts/:id", async (req, res) => {
+router.get("/posts/:id", async (req, res, next) => {
   try {
     const postId = req.params.id;
     const post = await postModel.findById(postId);
@@ -23,22 +27,20 @@ router.get("/posts/:id", async (req, res) => {
     }
     res.json(post);
   } catch (error) {
-    console.error("An error occurred while fetching post details:", error);
-    res.status(500).json({ error: "Server Error while fetching post details" });
+    next(error);
   }
 });
 
-router.post("/posts", async (req, res) => {
+router.post("/posts", async (req, res, next) => {
   try {
     const data = await postModel.create(req.body);
     res.json(data);
   } catch (error) {
-    console.error("An error occurred while creating a post:", error);
-    res.status(500).json({ error: "Server Error while creating a post" });
+    next(error);
   }
 });
 
-router.put("/posts/:id", async (req, res) => {
+router.put("/posts/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     const updatedData = await postModel.findByIdAndUpdate(
@@ -53,12 +55,11 @@ router.put("/posts/:id", async (req, res) => {
 
     res.json(updatedData);
   } catch (error) {
-    console.error("An error occurred while updating a post:", error);
-    res.status(500).json({ error: "Server Error while updating a post" });
+    next(error);
   }
 });
 
-router.patch("/posts/:id", async (req, res) => {
+router.patch("/posts/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     const updatedData = await postModel.findByIdAndUpdate(
@@ -73,20 +74,20 @@ router.patch("/posts/:id", async (req, res) => {
 
     res.json(updatedData);
   } catch (error) {
-    console.error("An error occurred while updating a post (PATCH):", error);
-    res.status(500).json({ error: "Server Error while updating a post" });
+    next(error);
   }
 });
 
-router.delete("/posts/:id", async (req, res) => {
+router.delete("/posts/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     await postModel.findByIdAndDelete(id);
     res.status(200).json({ message: "Post deleted successfully" });
   } catch (error) {
-    console.error("An error occurred while deleting a post:", error);
-    res.status(500).json({ error: "Server Error while deleting a post" });
+    next(error);
   }
 });
+
+router.use(errorHandler);
 
 module.exports = router;

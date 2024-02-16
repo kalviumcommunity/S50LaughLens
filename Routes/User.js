@@ -1,20 +1,24 @@
 const express = require('express');
 const router = express.Router(); 
 const userModel = require('../Schema/UserModel');
-const app = express()
 
-app.use(express.json())
-router.get("/users", async (req, res) => {
+router.use(express.json());
+
+const errorHandler = (error, req, res, next) => {
+  console.error("An error occurred:", error);
+  res.status(500).json({ error: "Server Error" });
+};
+
+router.get("/users", async (req, res, next) => {
     try {
         const data = await userModel.find();
         res.json(data);
     } catch (error) {
-        console.error("An error occurred:", error);
-        res.status(500).json({ error: "An error occurred" });
+        next(error);
     }
 });
 
-router.get("/users/:id", async (req, res) => {
+router.get("/users/:id", async (req, res, next) => {
     try {
       const userID = req.params.id;
       const userData = await userModel.findById(userID);
@@ -25,29 +29,21 @@ router.get("/users/:id", async (req, res) => {
   
       res.json(userData);
     } catch (error) {
-      console.error("error occurred while getting user details:", error);
-      res
-        .status(500)
-        .json({
-          error:
-            "Server Error with GET method while getting the user details",
-        });
+      next(error);
     }
-  });
-  router.post("/users", async (req, res) => {
+});
+
+router.post("/users", async (req, res, next) => {
     try {
       console.log(req.body);
       const data = await userModel.create(req.body);
       res.json(data);
     } catch (err) {
-      console.log("An error with POST user data", err);
-      res.status(500).json({
-        error: "Server Error: Unable to create user",
-      });
+      next(err);
     }
-  });
+});
   
-  router.put("/users/:id", async (req, res) => {
+router.put("/users/:id", async (req, res, next) => {
     try {
       const id = req.params.id;
       const updatedData = await userModel.findByIdAndUpdate(
@@ -57,7 +53,6 @@ router.get("/users/:id", async (req, res) => {
             name: req.body.name,
             Username: req.body.Username,
             Password: req.body.Password
-            // phone_number: req.body.phone_number,
           },
         },
         { new: true }
@@ -69,14 +64,11 @@ router.get("/users/:id", async (req, res) => {
   
       res.json(updatedData);
     } catch (error) {
-      console.error("Error occurred while updating user:", error);
-      res.status(500).json({
-        error: "Server Error with PUT method for updating user details",
-      });
+      next(error);
     }
-  });
+});
   
-  router.patch("/users/:id", async (req, res) => {
+router.patch("/users/:id", async (req, res, next) => {
     try {
       const id = req.params.id;
   
@@ -105,22 +97,22 @@ router.get("/users/:id", async (req, res) => {
   
       res.json(updatedData);
     } catch (error) {
-      console.error("error occurred while updating user details:", error);
-      res
-        .status(500)
-        .json({
-          error:
-            "Server Error with PATCH method for updating user dtails",
-        });
+      next(error);
     }
-  });
+});
 
-  router.delete("/users/:id", async (req, res) => {
-    const id = req.params.id;
-    await userModel.findByIdAndDelete(id);
-    res.status(201).json({
-      Message: "Deleted Succussfully",
-    });
-  });
+router.delete("/users/:id", async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      await userModel.findByIdAndDelete(id);
+      res.status(201).json({
+        Message: "Deleted Successfully",
+      });
+    } catch (error) {
+      next(error);
+    }
+});
+
+router.use(errorHandler);
 
 module.exports = router;
