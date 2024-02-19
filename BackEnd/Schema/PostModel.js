@@ -3,11 +3,13 @@ const mongoose = require('mongoose');
 const postSchema = new mongoose.Schema({
     PostId: {
         type: Number,
-        required: true
+        required: true,
+        unique:true
     },
     UserId: {
         type: Number,
-        required: true
+        required: true,
+        unique:true
     },
     File: {
         type: String,
