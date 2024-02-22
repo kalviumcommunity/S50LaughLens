@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import dummyData from "./data.json";
-const tabs = ["Home", "Profile", "Messages", "Notifications"];
+const tabs = ["Home","Trending","Messages", "Profile"];
+import Profile from "./Profile";
+import Messages from "./Message";
+import Trendingz from "./Trendingz";
 
 function Home() {
   const [data, setData] = useState([]);
@@ -19,9 +22,9 @@ function Home() {
             className={`px-3 py-2 cursor-pointer ${
               selectedTab === index ? "bg-gray-1000" : ""
             }`}
-            onClick={() => setSelectedTab(index)}
+            onClick={() => setSelectedTab(index)} 
           >
-            {tab}
+            {tab} 
           </div>
         ))}
       </div>
@@ -36,7 +39,7 @@ function Home() {
                 className="rounded h-7 mx-auto pl-3"
               />
 
-              <button className="rounded mr-12 h-8">
+              <button className="rounded mr-12 h-8 pr-2 pl-2 text-white	bg-green-600">
                 SignUp
               </button>
             </nav>
@@ -59,9 +62,10 @@ function Home() {
             </div>
           </div>
         )}
-        {selectedTab === 1 && <div>Profile tab </div>}
+        {selectedTab === 1 && <div>
+          Trendingz </div>}
         {selectedTab === 2 && <div>Messages tab </div>}
-        {selectedTab === 3 && <div>Notifications tab </div>}
+        {selectedTab === 3 && <div>Profile tab </div>}
       </div>
     </div>
   );
