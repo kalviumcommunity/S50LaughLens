@@ -1,0 +1,123 @@
+[
+  {
+      "id": 1,
+      "PostId": 148,
+      "UserId": 148,
+      "File": "exawertggfdsmple1.jpg",
+      "Likes": 108,
+      "Comments": 58,
+      "Shares": 38,
+      "Username": "user1",
+      "name": "Musthuano"
+  },
+  {
+      "id": 2,
+      "PostId": 149,
+      "UserId": 149,
+      "File": "example2.jpg",
+      "Likes": 110,
+      "Comments": 60,
+      "Shares": 40,
+      "Username": "user2",
+      "name": "samson"
+  },
+  {
+      "id": 3,
+      "PostId": 150,
+      "UserId": 150,
+      "File": "example3.jpg",
+      "Likes": 112,
+      "Comments": 62,
+      "Shares": 42,
+      "Username": "user3",
+      "name": "shahun"
+  },
+  {
+      "id": 4,
+      "PostId": 151,
+      "UserId": 151,
+      "File": "example4.jpg",
+      "Likes": 114,
+      "Comments": 64,
+      "Shares": 44,
+      "Username": "user4",
+      "name": "prathib"
+  },
+  {
+      "id": 5,
+      "PostId": 152,
+      "UserId": 152,
+      "File": "example5.jpg",
+      "Likes": 116,
+      "Comments": 66,
+      "Shares": 46,
+      "Username": "user5",
+      "name": "blable"
+  },
+  {
+      "id": 6,
+      "PostId": 153,
+      "UserId": 153,
+      "File": "example6.jpg",
+      "Likes": 118,
+      "Comments": 68,
+      "Shares": 48,
+      "Username": "user6",
+      "name": "vivid"
+  },
+  {
+      "id": 7,
+      "PostId": 154,
+      "UserId": 154,
+      "File": "example7.jpg",
+      "Likes": 120,
+      "Comments": 70,
+      "Shares": 50,
+      "Username": "user7",
+      "name": "Abbaas"
+  },
+  {
+      "id": 8,
+      "PostId": 155,
+      "UserId": 155,
+      "File": "example8.jpg",
+      "Likes": 122,
+      "Comments": 72,
+      "Shares": 52,
+      "Username": "user8",
+      "name": "jippy"
+  },
+  {
+      "id": 9,
+      "PostId": 156,
+      "UserId": 156,
+      "File": "example9.jpg",
+      "Likes": 124,
+      "Comments": 74,
+      "Shares": 54,
+      "Username": "user9",
+      "name": "Adidi"
+  },
+  {
+      "id": 10,
+      "PostId": 157,
+      "UserId": 157,
+      "File": "example10.jpg",
+      "Likes": 126,
+      "Comments": 76,
+      "Shares": 56,
+      "Username": "user10",
+      "name": "Silsila"
+  },
+  {
+    "id": 11,
+    "PostId": 167,
+    "UserId": 167,
+    "File": "example10.jpg",
+    "Likes": 16,
+    "Comments": 6,
+    "Shares": 5,
+    "Username": "user11",
+    "name": "Yash(Kannada Actor)"
+}
+]

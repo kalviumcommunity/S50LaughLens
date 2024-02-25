@@ -1,11 +1,16 @@
 import React from "react";
-import LoginPage from "./components/LoginPage";
+import LoginPage from "./components/Start";
+import Home from './components/Home';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
-    <>
-      <LoginPage/>
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </Router>
   );
 }
 
