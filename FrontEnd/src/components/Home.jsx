@@ -1,17 +1,33 @@
 import React, { useEffect, useState } from "react";
-import dummyData from "./data.json";
+// import dummyData from "./data.json";
 const tabs = ["Home","Trending","Messages", "Profile"];
 import Profile from "./Profile";
 import Messages from "./Message";
 import Trendingz from "./Trendingz";
+import axios from "axios";
 
 function Home() {
-  const [data, setData] = useState([]);
+  const [userdata, setData] = useState([]);
   const [selectedTab, setSelectedTab] = useState(0);
 
+  // useEffect(() => {
+  //   setData(dummyData);
+  // }, []);
+
   useEffect(() => {
-    setData(dummyData);
+    const fetchData = async () => {
+      try { 
+        const res = await axios.get("http://localhost:3002/users");
+        console.log(res);
+        setData(res.data);
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
+    };
+
+    fetchData();
   }, []);
+
 
   return (
     <div className="bg-blue-100">
@@ -44,15 +60,15 @@ function Home() {
               </button>
             </nav>
             <div className="bgimg border  flex items-center justify-center pl-8 ">
-              <h1 className="text-4xl mt-2 font-bold">Dummy Data</h1> 
+              <h1 className="text-4xl mt-2 font-bold">Users Data</h1> 
             </div>
             <div className="mt-6 w-1/2 bg-blue-300 rounded mx-auto ">
-              {data.map((data) => (
+              {userdata.map((data) => (
                 <div
-                  key={data.id}
+                  key={data._id}
                   className="bg-white border p-4 rounded-md m-4 mx-auto">
                   <div className="flex justify-between">
-                    <p>Id-{data.id}</p>
+                    <p>Id-{data._id}</p>
                     <p>{data.Username}</p>
                   </div>
                   <p className=" text-xl font-bold mb-2">{data.name}</p>
@@ -62,10 +78,9 @@ function Home() {
             </div>
           </div>
         )}
-        {selectedTab === 1 && <div>
-          Trendingz </div>}
-        {selectedTab === 2 && <div>Messages tab </div>}
-        {selectedTab === 3 && <div>Profile tab </div>}
+        {selectedTab === 1 && <Trendingz />}
+        {selectedTab === 2 && <Messages tab />}
+        {selectedTab === 3 && <Profile tab/>}
       </div>
     </div>
   );
