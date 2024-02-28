@@ -8,6 +8,7 @@ const Post = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset  
   } = useForm();
 
   const onSubmit = async (data) => {
@@ -22,6 +23,7 @@ const Post = () => {
         Shares: 0,
       });
       console.log("File posted successfully");
+      reset(); 
     } catch (error) {
       console.error("Error posting file:", error);
     }
