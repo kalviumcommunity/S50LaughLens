@@ -9,7 +9,7 @@ const errorHandler = (error, req, res, next) => {
   res.status(500).json({ error: "Server Error" });
 };
 
-router.get("/users", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
     try {
         const data = await userModel.find();
         res.json(data);
@@ -18,7 +18,7 @@ router.get("/users", async (req, res, next) => {
     }
 });
 
-router.get("/users/:id", async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
     try {
       const userID = req.params.id;
       const userData = await userModel.findById(userID);
@@ -33,7 +33,7 @@ router.get("/users/:id", async (req, res, next) => {
     }
 });
 
-router.post("/users", async (req, res, next) => {
+router.post("/", async (req, res, next) => {
     try {
       console.log(req.body);
       const data = await userModel.create(req.body);
@@ -43,7 +43,7 @@ router.post("/users", async (req, res, next) => {
     }
 });
   
-router.put("/users/:id", async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
     try {
       const id = req.params.id;
       const updatedData = await userModel.findByIdAndUpdate(
@@ -68,7 +68,7 @@ router.put("/users/:id", async (req, res, next) => {
     }
 });
   
-router.patch("/users/:id", async (req, res, next) => {
+router.patch("/:id", async (req, res, next) => {
     try {
       const id = req.params.id;
   
@@ -101,7 +101,7 @@ router.patch("/users/:id", async (req, res, next) => {
     }
 });
 
-router.delete("/users/:id", async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
     try {
       const id = req.params.id;
       await userModel.findByIdAndDelete(id);

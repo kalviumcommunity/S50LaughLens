@@ -1,31 +1,30 @@
+// schema.js
 const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
-    PostId: {
-        type: Number,
-        required: true,
-        unique:true
-    },
-    UserId: {
-        type: Number,
-        required: true,
-        unique:true
+    Username: {
+        type: String,
+        required: true
     },
     File: {
         type: String,
         required: true
     },
+    Caption: {
+        type: String, 
+        default: ""
+    },
     Likes: {
         type: Number,
-        required: true
+        default: 0 
     },
     Comments: {
         type: Number,
-        required: true
+        default: 0 
     },
     Shares: {
         type: Number,
-        required: true
+        default: 0 
     }
 });
 

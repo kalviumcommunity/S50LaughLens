@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const postModel = require("../Schema/PostModel");
-
 router.use(express.json());
 
 const errorHandler = (error, req, res, next) => {
@@ -9,19 +8,20 @@ const errorHandler = (error, req, res, next) => {
   res.status(500).json({ error: "Server Error" });
 };
 
-router.get("/posts", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
-    const data = await postModel.find();
+    const data =  await postModel.find();
     res.json(data);
   } catch (error) {
     next(error);
   }
 });
 
-router.get("/posts/:id", async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
-    const postId = req.params.id;
-    const post = await postModel.findById(postId);
+    const _id = req.params.id;
+    console.log(_id)
+    const post = await postModel.findById(_id);
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }
@@ -31,16 +31,16 @@ router.get("/posts/:id", async (req, res, next) => {
   }
 });
 
-router.post("/posts", async (req, res, next) => {
+router.post("/", async (req, res) => {
   try {
     const data = await postModel.create(req.body);
     res.json(data);
   } catch (error) {
-    next(error);
+    res.json({error:error});
   }
-});
+})
 
-router.put("/posts/:id", async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     const updatedData = await postModel.findByIdAndUpdate(
@@ -59,7 +59,7 @@ router.put("/posts/:id", async (req, res, next) => {
   }
 });
 
-router.patch("/posts/:id", async (req, res, next) => {
+router.patch("/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     const updatedData = await postModel.findByIdAndUpdate(
@@ -78,7 +78,7 @@ router.patch("/posts/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/posts/:id", async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   try {
     const id = req.params.id;
     await postModel.findByIdAndDelete(id);
