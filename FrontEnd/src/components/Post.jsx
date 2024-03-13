@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 const Post = () => {
   const {
@@ -10,6 +10,7 @@ const Post = () => {
     formState: { errors },
     reset  
   } = useForm();
+  
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -24,13 +25,14 @@ const Post = () => {
       });
       console.log("File posted successfully");
       reset(); 
+      window.location.reload();
     } catch (error) {
       console.error("Error posting file:", error);
     }
   };
 
   return (
-    <div className="list border border-gray-500 max-w-md mx-auto mt-10 p-6 rounded-md shadow-md">
+    <div >
       <h2 className="text-2xl font-semibold mb-4">Enter File URL</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
@@ -84,7 +86,7 @@ const Post = () => {
         </button>
       </form>
 
-      <Link className="block mx-auto text-center mt-6  border bg-orange-400 rounded pt-2 pb-2 hover:bg-orange-500"  to="/home">Go to Home</Link>
+
     </div>
   );
 };

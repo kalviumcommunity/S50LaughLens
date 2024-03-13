@@ -1,7 +1,7 @@
 const MyComponent = () => {
     return (
         <>
-        <h1>Trending</h1>
+        <h1>Trendingz</h1>
         
         </>
     );
