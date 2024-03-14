@@ -7,8 +7,12 @@ import Upload from "../assets/upload.png";
 import Login from "../assets/Login.png";
 import Homee from "../assets/home.png";
 import ham from "../assets/ham.png";
-import POST from "./Post";
-import Update from "./Update"
+import POST from "../CRUDpages/Post.jsx";
+import Update from "../CRUDpages/Update"
+import { Link } from 'react-router-dom';
+import navlogo from "../assets/navlogo.png";
+
+
 
 function Home() {
   const [userdata, setData] = useState([]);
@@ -104,7 +108,7 @@ function Home() {
         {selectedTab === 0 && (
           <div className="mx-auto">
             <nav className="h-12 flex items-center top-0">
-              <div className="h-14 mt-5 ml-5"></div>
+              <img src={navlogo} alt="" className="w-32 pl-2" />
               <input
                 type="text"
                 placeholder="Search"
@@ -117,10 +121,10 @@ function Home() {
                 <img src={Upload} alt="" />
               </button>
 
-              <button className="rounded mr-12 mt-5 w-10">
+              <Link to='/SignUp' className="rounded mr-12 mt-5 w-10">
                 <img src={Login} alt="" className="cursor-pointer" />
                 <p className="text-sm font-bold text-gray-300">Login</p>
-              </button>
+              </Link>
             </nav>
             <div className="mt-6 border-gray-800 w-1/2 bg-gradient-to-r from-green-950 to-blue-800 rounded mx-auto">
               {userdata.map((data) => (
@@ -157,7 +161,7 @@ function Home() {
                               onClick={() => {
                                 setShowEditPopup(true);
                                 setSelectedPostId(data._id); 
-                                console.log(data.Caption)// Set selected post ID
+                                console.log(data.Caption)
                               }}
                             >
                               Edit
@@ -212,7 +216,7 @@ function Home() {
       {showEditPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="list border border-gray-500 max-w-md mx-auto mt-10 shadow-md bg-gradient-to-r from-green-800 to-blue-950 p-4 rounded-md">
-            <Update postId={selectedPostId} /> {/* Pass selectedPostId as prop */}
+            <Update postId={selectedPostId} /> 
             <button className="block mx-auto mt-4 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700" onClick={() => setShowEditPopup(false)}>Close</button>
           </div>
         </div>

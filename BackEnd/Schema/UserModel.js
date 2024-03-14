@@ -2,11 +2,6 @@ const mongoose = require("mongoose");
 
 // Define user schema
 const userSchema = new mongoose.Schema({
-  UserID: {
-    type: Number,
-    required: true,
-    unique: true
-  },
   Username: {
     type: String,
     required: true,
@@ -14,20 +9,24 @@ const userSchema = new mongoose.Schema({
   },
   name: {
     type: String,
-    required: true,
-    // unique: true
+    required: true
   },
   Password: {
     type: String,
     required: true
   },
+  Email: { 
+    type: String,
+    required: true,
+    unique: true
+  },
   Posts: {
     type: Number,
-    required: true
+    default: 0
   },
-  Streak:{
+  Streak: {
     type: Number,
-    required: true
+    default: 0
   }
 });
 
