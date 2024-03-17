@@ -27,7 +27,6 @@ function Update({ postId }) {
 
   return (
     <div>
-      <h2>Update Post</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label htmlFor="caption" className="block mb-1">

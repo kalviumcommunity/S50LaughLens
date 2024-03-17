@@ -8,11 +8,9 @@ import Login from "../assets/Login.png";
 import Homee from "../assets/home.png";
 import ham from "../assets/ham.png";
 import POST from "../CRUDpages/Post.jsx";
-import Update from "../CRUDpages/Update"
+import Update from "../CRUDpages/Update";
 import { Link } from 'react-router-dom';
 import navlogo from "../assets/navlogo.png";
-
-
 
 function Home() {
   const [userdata, setData] = useState([]);
@@ -20,7 +18,8 @@ function Home() {
   const [showPostPopup, setShowPostPopup] = useState(false);
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [dropdownStates, setDropdownStates] = useState({});
-  const [selectedPostId, setSelectedPostId] = useState(null); // State to store the selected post ID
+  const [selectedPostId, setSelectedPostId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const dropdownRefs = useRef({});
 
   const tabs = [
@@ -34,7 +33,8 @@ function Home() {
     const fetchData = async () => {
       try {
         const res = await axios.get("http://localhost:3001/posts");
-        setData(res.data);
+        const shuffledData = res.data.sort(() => Math.random() - 0.5);
+        setData(shuffledData);
       } catch (error) {
         console.error("Error fetching data", error);
       }
@@ -83,6 +83,24 @@ function Home() {
     }
   };
 
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredData = userdata.filter((data) =>
+    data.Caption.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Function to get cookie value by name
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
+  // Get the value of the "Username" cookie
+  const usernameCookie = getCookie('username');
+
   return (
     <div className="relative bg-gradient-to-r from-blue-950 to-green-800 text-gray-300">
       <div className="fixed bg-gradient-radial left-0 top-0 h-screen bg-blue-950 text-white flex flex-col w-32 text-sm pt-6">
@@ -112,7 +130,9 @@ function Home() {
               <input
                 type="text"
                 placeholder="Search"
-                className="w-1/2  h-10 bg-transparent backdrop-filter backdrop-blur-md border border-gray-300 rounded-md px-4 py-2 focus:outline-none mx-auto pl-3"
+                className="w-2/3  h-10 bg-transparent backdrop-filter backdrop-blur-md border border-gray-300 rounded-md px-4 py-2 focus:outline-none mx-auto pl-3"
+                value={searchQuery}
+                onChange={handleSearch}
               />
               <button
                 className="rounded button mr-20 h-9 w-16 fixed bottom-12 right-4 hover:opacity-80"
@@ -121,13 +141,17 @@ function Home() {
                 <img src={Upload} alt="" />
               </button>
 
-              <Link to='/SignUp' className="rounded mr-12 mt-5 w-10">
-                <img src={Login} alt="" className="cursor-pointer" />
-                <p className="text-sm font-bold text-gray-300">Login</p>
+              <Link to='/SignUp' className="rounded mr-16 mt-5 w-10 justify-center align-middle ">
+                <img src={Login} alt="" className="  cursor-pointer rounded-ful" />
+                {usernameCookie ? (
+                  <p className="text-xs font-bold text-gray-300">{usernameCookie}</p>
+                ) : (
+                  <p className="text-xs font-bold text-gray-300">Register</p>
+                )}
               </Link>
             </nav>
-            <div className="mt-6 border-gray-800 w-1/2 bg-gradient-to-r from-green-950 to-blue-800 rounded mx-auto">
-              {userdata.map((data) => (
+            <div className="mt-6 border-gray-800 w-1/2 rounded mx-auto">
+              {filteredData.map((data) => (
                 <div
                   key={data._id}
                   className="bg-gradient-to-r from-blue-950 to-yellow-800 border p-4 m-4 mx-auto rounded"
@@ -207,17 +231,49 @@ function Home() {
       </div>
       {showPostPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          
           <div className="list border border-gray-500 max-w-md mx-auto mt-10 shadow-md bg-gradient-to-r from-green-800 to-blue-950 p-4 rounded-md">
+          <button onClick={() => setShowPostPopup(false)} className="flex items-center justify-center w-12 h-10 bg-red-500 hover:bg-red-600 rounded-full text-white focus:outline-none">
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
             <POST />
-            <button className="block mx-auto mt-4 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700" onClick={() => setShowPostPopup(false)}>Close</button>
           </div>
         </div>
       )}
       {showEditPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          
           <div className="list border border-gray-500 max-w-md mx-auto mt-10 shadow-md bg-gradient-to-r from-green-800 to-blue-950 p-4 rounded-md">
+          <button onClick={() => setShowEditPopup(false)} className="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 rounded-full text-white focus:outline-none">
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
             <Update postId={selectedPostId} /> 
-            <button className="block mx-auto mt-4 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700" onClick={() => setShowEditPopup(false)}>Close</button>
           </div>
         </div>
       )}
