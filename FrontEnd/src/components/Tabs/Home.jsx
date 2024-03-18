@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import Trendingz from "./Trendingz";
-import Messages from "./Message";
 import Profile from "./Profile";
 import Upload from "../assets/upload.png";
 import Login from "../assets/Login.png";
@@ -25,7 +24,6 @@ function Home() {
   const tabs = [
     { label: "Home", image: Homee },
     { label: "Trending", image: Upload },
-    { label: "Signals", image: Login },
     { label: "Profile", image: Login },
   ];
 
@@ -33,6 +31,7 @@ function Home() {
     const fetchData = async () => {
       try {
         const res = await axios.get("http://localhost:3001/posts");
+        console.log(res.data)
         const shuffledData = res.data.sort(() => Math.random() - 0.5);
         setData(shuffledData);
       } catch (error) {
@@ -226,8 +225,7 @@ function Home() {
           </div>
         )}
         {selectedTab === 1 && <Trendingz />}
-        {selectedTab === 2 && <Messages tab />}
-        {selectedTab === 3 && <Profile tab />}
+        {selectedTab === 2 && <Profile tab />}
       </div>
       {showPostPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import cookies from "js-cookie"
 
 function SignUpForm() {
   const [formData, setFormData] = useState({
@@ -37,6 +38,9 @@ function SignUpForm() {
         "http://localhost:3001/users",
         formData
       );
+      // console.log(response.data)
+      cookies.set("token",response.data)
+
       console.log(formData);
       alert(`Account created for ${response.data.username}`);
 
