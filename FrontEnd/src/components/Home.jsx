@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import Trendingz from "./Trendingz";
-import Messages from "./Message";
 import Profile from "./Profile";
 import Upload from "../assets/upload.png";
 import Login from "../assets/Login.png";
@@ -21,8 +19,6 @@ function Home() {
 
   const tabs = [
     { label: "Home", image: Homee },
-    { label: "Trending", image: Upload },
-    { label: "Signals", image: Login },
     { label: "Profile", image: Login },
   ];
 
@@ -157,7 +153,7 @@ function Home() {
                               onClick={() => {
                                 setShowEditPopup(true);
                                 setSelectedPostId(data._id); 
-                                console.log(data.Caption)// Set selected post ID
+                                console.log(data.Caption)
                               }}
                             >
                               Edit
@@ -197,9 +193,7 @@ function Home() {
             </div>
           </div>
         )}
-        {selectedTab === 1 && <Trendingz />}
-        {selectedTab === 2 && <Messages tab />}
-        {selectedTab === 3 && <Profile tab />}
+        {selectedTab === 1 && <Profile tab />}
       </div>
       {showPostPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -212,7 +206,7 @@ function Home() {
       {showEditPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="list border border-gray-500 max-w-md mx-auto mt-10 shadow-md bg-gradient-to-r from-green-800 to-blue-950 p-4 rounded-md">
-            <Update postId={selectedPostId} /> {/* Pass selectedPostId as prop */}
+            <Update postId={selectedPostId} /> 
             <button className="block mx-auto mt-4 px-4 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:bg-gray-700" onClick={() => setShowEditPopup(false)}>Close</button>
           </div>
         </div>
