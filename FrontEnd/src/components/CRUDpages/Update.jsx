@@ -11,7 +11,6 @@ function Update({ postId }) {
     setFormData({ ...formData, [name]: value });
   };
   
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
