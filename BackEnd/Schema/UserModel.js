@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 // Define user schema
 const userSchema = new mongoose.Schema({
@@ -27,6 +28,20 @@ const userSchema = new mongoose.Schema({
   Streak: {
     type: Number,
     default: 0
+  }
+});
+
+// Pre-save middleware to hash passwords before saving
+userSchema.pre('save', async function(next) {
+  const user = this;
+  if (!user.isModified('Password')) return next();
+
+  try {
+    const hashedPassword = await bcrypt.hash(user.Password, 10);
+    user.Password = hashedPassword;
+    next();
+  } catch (error) {
+    return next(error);
   }
 });
 
