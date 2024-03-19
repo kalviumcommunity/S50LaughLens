@@ -31,10 +31,7 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // Check if the entered username exists in the usersData array
     const user = usersData.find(user => user.Username === formData.Username);
-
     if (user) {
       if (user.Password === formData.Password) {
         document.cookie = `username=${formData.Username};`;

@@ -6,7 +6,7 @@ import Login from  './components/CRUDpages/Login';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 function App() {
   return (
-    
+    <div className="bg-gradient-to-r from-blue-950 to-green-800 min-h-screen">
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
@@ -16,6 +16,7 @@ function App() {
 
       </Routes>
     </Router>
+    </div>
     
   );
 }
