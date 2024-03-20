@@ -8,11 +8,19 @@ function SignUpForm() {
     Username: "",
     name: "",
     Password: "",
+<<<<<<< HEAD
     Email: "",
   });
 
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+=======
+    Email: "", 
+  });
+
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errors, setErrors] = useState({}); 
+>>>>>>> jwt
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,18 +46,30 @@ function SignUpForm() {
         "http://localhost:3001/users",
         formData
       );
+<<<<<<< HEAD
       Cookies.set("token", response.data);
+=======
+      cookies.set("token",response.data)
+>>>>>>> jwt
 
       alert(`Account created`);
 
+<<<<<<< HEAD
       document.cookie = `username=${formData.Username}; max-age=3600`; 
+=======
+      document.cookie = `username=${formData.Username}; max-age=3600`;
+>>>>>>> jwt
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const { error: validationError } = error.response.data;
         setErrors({ ...validationError });
       } else {
         console.error("Error:", error);
+<<<<<<< HEAD
         alert("An error occurred. Please try again.");
+=======
+        alert("An error occurred. Please try again."); 
+>>>>>>> jwt
       }
     }
   };

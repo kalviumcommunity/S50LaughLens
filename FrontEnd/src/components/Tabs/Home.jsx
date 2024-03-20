@@ -94,7 +94,11 @@ function Home() {
     if (parts.length === 2) return parts.pop().split(";").shift();
   };
 
+<<<<<<< HEAD
   const usernameCookie = getCookie("username");
+=======
+  const usernameCookie = getCookie('username');
+>>>>>>> jwt
 
   return (
     <div className="relative bg-gradient-to-r from-blue-950 to-green-800 text-gray-300 pb-10">

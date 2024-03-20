@@ -3,6 +3,7 @@ const router = express.Router();
 const Joi = require("joi"); 
 const userModel = require("../Schema/UserModel");
 const jwt = require('jsonwebtoken')
+require('dotenv').config(); 
 const app = express()
 
 router.use(express.json());
@@ -63,9 +64,9 @@ router.post("/", async (req, res, next) => {
       Email
     };
 
-    const secretKey = "shambu"; 
+    const secretKey = process.env.SECRET_KEY; 
   
-      const token = jwt.sign(tokenPayload, "shambu")
+      const token = jwt.sign(tokenPayload, secretKey)
 
       res.cookie('token', token, {
         httpOnly: true,
