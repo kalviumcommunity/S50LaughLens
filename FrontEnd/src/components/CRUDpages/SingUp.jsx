@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 function SignUpForm() {
   const [formData, setFormData] = useState({
     Username: "",
     name: "",
     Password: "",
-    Email: "", 
+    Email: "",
   });
 
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -38,10 +38,9 @@ function SignUpForm() {
         "http://localhost:3001/users",
         formData
       );
-      cookies.set("token",response.data)
+      Cookies.set("token", response.data);
 
-      console.log(formData);
-      alert(`Account created for ${response.data.username}`);
+      alert(`Account created`);
 
       document.cookie = `username=${formData.Username}; max-age=3600`; 
     } catch (error) {
@@ -61,23 +60,23 @@ function SignUpForm() {
         onSubmit={handleSubmit}
         className="w-1/2 p-8 bg-gradient-to-r from-blue-950 to-green-800 rounded-lg shadow-lg"
       >
-        <Link to="/home" >
-        <button class="flex items-center justify-center w-12 h-10 bg-red-500 hover:bg-red-600 rounded-full text-white focus:outline-none">
-          <svg
-            class="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M6 18L18 6M6 6l12 12"
-            ></path>
-          </svg>
-        </button>
+        <Link to="/home">
+          <button className="flex items-center justify-center w-12 h-10 bg-red-500 hover:bg-red-600 rounded-full text-white focus:outline-none">
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
         </Link>
         <h2 className="text-3xl font-semibold text-gray-300 mb-8 text-center">
           Sign Up
@@ -146,7 +145,6 @@ function SignUpForm() {
           <u>Already have an account?</u>
         </Link>
         <br />{" "}
-        
       </form>
     </div>
   );
