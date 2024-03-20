@@ -7,23 +7,26 @@ function ProjectIdea() {
   return (
     <>
       <div
-        className="h-screen pt-14"
-        style={{
-          backgroundImage: `url(${bg})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-        }}
-      >
-        <div className="shadow-2xl mx-auto bg-yellow-400 w-1/2 rounded-3xl p-10 ">
+  className="h-screen pt-14"
+  style={{
+    backgroundImage: `url(${bg})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "repeat",
+  }}
+>
+
+
+        <div className="shadow-2xl mx-auto bg-gradient-to-t from-blue-950 to-green-800 w-1/2 rounded-3xl p-10 ">
           <img
             src={logo}
-            className="animate-spin w-48 mx-auto rounded-full border-2 border-green-700"
-          />
-          <h1 className="font-bold text-center"> LaughlenS</h1>
-          <p className="text-center text-xl pt-10 pb-6 text-red-900 font-medium">
+            className="animate-spin w-48 mx-auto rounded-full border-2 border-green-900" style={{ animationDuration: '19s' }}
+            />
+          <h1 className="font-bold pt-1 text-center text-yellow-500"> LaughlenS</h1>
+          <p className="text-center text-xl pt-10 pb-6 text-white font-medium">
             Share laughter, inspiration, and share your thoughts!!
           </p>
-          <p className="text-center pb-6 text-gray-700">
+          <p className="text-center pb-6 text-gray-400">
             Welcome to LaughlenS, The ultimate destination for weird laughs!
             Dive into a world of quirky giggles and contagious chuckles. Join
             our community, share your unique laughs, and spread joy worldwide.
@@ -31,7 +34,7 @@ function ProjectIdea() {
           </p>
 
           <Link to="/home">
-            <button className="mx-auto block bg-green-900 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-3xl">
+            <button className="mx-auto block bg-green-800 hover:bg-green-700 text-white font-bold py-2 px-10 rounded-3xl">
               Get Started
             </button>
           </Link>
