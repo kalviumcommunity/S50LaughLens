@@ -40,7 +40,9 @@ function SignUpForm() {
       );
       Cookies.set("token", response.data);
 
-      alert(`Account created`);
+      console.log(formData);
+      alert(`Account created `);
+      window.location.href("/home")
 
       document.cookie = `username=${formData.Username}; max-age=3600`;
     } catch (error) {
