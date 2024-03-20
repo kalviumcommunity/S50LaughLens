@@ -41,7 +41,8 @@ function SignUpForm() {
       cookies.set("token",response.data)
 
       console.log(formData);
-      alert(`Account created for ${response.data.username}`);
+      alert(`Account created `);
+      window.location.href("/home")
 
       document.cookie = `username=${formData.Username}; max-age=3600`;
     } catch (error) {
