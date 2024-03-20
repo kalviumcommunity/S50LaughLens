@@ -15,8 +15,6 @@ function ProjectIdea() {
     backgroundRepeat: "repeat",
   }}
 >
-
-
         <div className="shadow-2xl mx-auto bg-gradient-to-t from-blue-950 to-green-800 w-1/2 rounded-3xl p-10 ">
           <img
             src={logo}

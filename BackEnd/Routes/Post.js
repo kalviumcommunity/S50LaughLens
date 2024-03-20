@@ -7,15 +7,24 @@ const errorHandler = (error, req, res, next) => {
   console.error("An error occurred:", error);
   res.status(500).json({ error: "Server Error" });
 };
-
 router.get("/", async (req, res, next) => {
   try {
-    const data =  await postModel.find();
-    res.json(data);
+    const selectedUser = req.query.Username;
+
+    if (selectedUser) {
+      const posts = await postModel.find({ Username: selectedUser });
+      return res.json(posts);
+    } else {
+      const allPosts = await postModel.find();
+      return res.json(allPosts);
+    }
   } catch (error) {
     next(error);
   }
 });
+
+
+
 
 router.get("/:id", async (req, res, next) => {
   try {

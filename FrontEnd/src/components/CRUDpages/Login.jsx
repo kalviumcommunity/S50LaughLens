@@ -33,7 +33,6 @@ function Login() {
     e.preventDefault();
 
     const user = usersData.find(user => user.Username === formData.Username);
-
     if (user) {
       if (user.Password === formData.Password) {
         document.cookie = `username=${formData.Username};`;

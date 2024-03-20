@@ -7,7 +7,7 @@ import Homee from "../assets/home.png";
 import ham from "../assets/ham.png";
 import POST from "../CRUDpages/Post.jsx";
 import Update from "../CRUDpages/Update";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import navlogo from "../assets/navlogo.png";
 
 function Home() {
@@ -17,7 +17,7 @@ function Home() {
   const [showEditPopup, setShowEditPopup] = useState(false);
   const [dropdownStates, setDropdownStates] = useState({});
   const [selectedPostId, setSelectedPostId] = useState(null);
-  const [searchQuery, setSearchQuery] = useState(""); // State for search query
+  const [searchQuery, setSearchQuery] = useState("");
   const dropdownRefs = useRef({});
 
   const tabs = [
@@ -29,7 +29,7 @@ function Home() {
     const fetchData = async () => {
       try {
         const res = await axios.get("http://localhost:3001/posts");
-        console.log(res.data)
+        console.log(res.data);
         const shuffledData = res.data.sort(() => Math.random() - 0.5);
         setData(shuffledData);
       } catch (error) {
@@ -91,13 +91,12 @@ function Home() {
   const getCookie = (name) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-  }
-
-  const usernameCookie = getCookie('username');
-
-  return (
-    <div className="relative bg-gradient-to-r from-blue-950 to-green-800 text-gray-300">
+    if (parts.length === 2) return parts.pop().split(";").shift();
+  };
+  
+  const usernameCookie = getCookie("username");
+    return (
+    <div className="relative bg-gradient-to-r from-blue-950 to-green-800 text-gray-300 pb-10">
       <div className="fixed bg-gradient-radial left-0 top-0 h-screen bg-blue-950 text-white flex flex-col w-32 text-sm pt-6">
         {tabs.map((tab, index) => (
           <div
@@ -121,7 +120,10 @@ function Home() {
         {selectedTab === 0 && (
           <div className="mx-auto">
             <nav className="h-12 flex items-center top-0">
-              <img src={navlogo} alt="" className="w-32 pl-2" />
+              <a href="/" className="border-none">
+                <img src={navlogo} alt="" className="w-32 pl-2" />
+              </a>
+
               <input
                 type="text"
                 placeholder="Search"
@@ -136,20 +138,36 @@ function Home() {
                 <img src={Upload} alt="" />
               </button>
 
-              <Link to='/SignUp' className="rounded mr-16 mt-5 w-10 justify-center align-middle ">
-                <img src={Login} alt="" className="  cursor-pointer rounded-ful" />
-                {usernameCookie ? (
-                  <p className="text-xs font-bold text-gray-300">{usernameCookie}</p>
-                ) : (
+              {usernameCookie ? (
+                <div className="rounded mr-16 mt-5 w-10 justify-center align-middle">
+                  <img
+                    src={Login}
+                    alt=""
+                    className="cursor-pointer rounded-full"
+                  />
+                  <p className="text-xs font-bold text-gray-300">
+                    {usernameCookie}
+                  </p>
+                </div>
+              ) : (
+                <Link
+                  to="/SignUp"
+                  className="rounded mr-16 mt-5 w-10 justify-center align-middle"
+                >
+                  <img
+                    src={Login}
+                    alt=""
+                    className="cursor-pointer rounded-full"
+                  />
                   <p className="text-xs font-bold text-gray-300">Register</p>
-                )}
-              </Link>
+                </Link>
+              )}
             </nav>
             <div className="mt-6 border-gray-800 w-1/2 rounded mx-auto">
               {filteredData.map((data) => (
                 <div
                   key={data._id}
-                  className="bg-gradient-to-r from-blue-950 to-yellow-800 border p-4 m-4 mx-auto rounded"
+                  className="bg-gradient-to-r from-blue-950 to-yellow-900 border p-4 m-4 mx-auto rounded"
                 >
                   <div className="flex justify-between">
                     <span>
@@ -179,14 +197,12 @@ function Home() {
                               className="block px-4 py-2 text-sm  hover:bg-gray-900"
                               onClick={() => {
                                 setShowEditPopup(true);
-                                setSelectedPostId(data._id); 
-                                console.log(data.Caption)
+                                setSelectedPostId(data._id);
                               }}
                             >
                               Edit
                             </a>
                             <a
-                              
                               className="block px-4 py-2 text-sm  hover:bg-gray-900"
                               onClick={() => handleDelete(data._id)}
                             >
@@ -210,11 +226,7 @@ function Home() {
                       allowFullScreen
                     ></iframe>
                   </div>
-                  <span className="flex justify-between mt-3">
-                    <p>{data.Likes}</p>
-                    <p>{data.Comments}</p>
-                    <p>{data.Shares}</p>
-                  </span>
+                  <span className="flex justify-between mt-3"></span>
                 </div>
               ))}
             </div>
@@ -224,49 +236,53 @@ function Home() {
       </div>
       {showPostPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          
           <div className="list border border-gray-500 max-w-md mx-auto mt-10 shadow-md bg-gradient-to-r from-green-800 to-blue-950 p-4 rounded-md">
-          <button onClick={() => setShowPostPopup(false)} className="flex items-center justify-center w-12 h-10 bg-red-500 hover:bg-red-600 rounded-full text-white focus:outline-none">
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+            <button
+              onClick={() => setShowPostPopup(false)}
+              className="flex items-center justify-center w-12 h-10 bg-red-500 hover:bg-red-600 rounded-full text-white focus:outline-none"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
-            </svg>
-          </button>
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            </button>
             <POST />
           </div>
         </div>
       )}
       {showEditPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
-          
           <div className="list border border-gray-500 max-w-md mx-auto mt-10 shadow-md bg-gradient-to-r from-green-800 to-blue-950 p-4 rounded-md">
-          <button onClick={() => setShowEditPopup(false)} className="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 rounded-full text-white focus:outline-none">
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
+            <button
+              onClick={() => setShowEditPopup(false)}
+              className="flex items-center justify-center w-8 h-8 bg-red-500 hover:bg-red-600 rounded-full text-white focus:outline-none"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
-            </svg>
-          </button>
-            <Update postId={selectedPostId} /> 
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            </button>
+            <Update postId={selectedPostId} />
           </div>
         </div>
       )}

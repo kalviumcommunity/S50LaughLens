@@ -9,6 +9,7 @@ const Logout = () => {
 const MyComponent = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
+
   const [entities, setEntities] = useState([]);
   const [currentUser, setCurrentUser] = useState(null); 
 
@@ -28,6 +29,7 @@ const MyComponent = () => {
         const response = await axios.get(
           `http://localhost:3001/users?Username=${usernameCookie}`
         );
+
         setCurrentUser(response.data); 
       } catch (error) {
         console.error("Error fetching currentUser:", error);
@@ -37,6 +39,7 @@ const MyComponent = () => {
     if (usernameCookie) {
       fetchCurrentUser();
     } else {
+
       setCurrentUser();
     }
   }, [usernameCookie]); 
@@ -96,6 +99,7 @@ const MyComponent = () => {
           </button>
         </span>
 
+
         {currentUser && ( 
           <>
             <span className="flex justify-around w-60 mb-4">
@@ -113,6 +117,7 @@ const MyComponent = () => {
                 type="password"
                 value="supersecret"
                 readOnly
+
                 className=" px-4 py-2 rounded-md focus:outline-none focus:border-blue-500 bg-gray-900"
               />
             </span>
@@ -127,11 +132,13 @@ const MyComponent = () => {
             id="userSelect"
             value={selectedUser}
             onChange={handleUserChange}
+
             className="  px-4 py-2 mb-4 rounded-md focus:outline-none focus:border-gray-500 bg-gray-900   text-white"
           >
             <option>select user</option>
             {users.map((user) => (
               <option
+
                 className="text-orange-800 font-semibold "
                 key={user._id}
                 value={user.Username}
@@ -141,7 +148,7 @@ const MyComponent = () => {
             ))}
           </select>
         </h2>
-        <div className=" flex justify-around">
+            {/* Assuming entities is defined */}
           <div>
             {entities.map((post) => (
               <div key={post._id} className="video-container shadow-sm">
@@ -163,16 +170,19 @@ const MyComponent = () => {
     );
   };
 
-  const usernameCookiePair = document.cookie
-    .split(";")
     .find((pair) => pair.trim().startsWith("username="));
   const isLoggedIn = !!usernameCookiePair;
-
   return (
     <div>
       {isLoggedIn ? (
         renderUserDetails()
       ) : (
+        <button
+          className="border border-green-600 bg-green-600 text-black px-4 py-2 rounded hover:bg-green-500 mx-16"
+          onClick={handleLogin}
+        >
+          Login
+        </button>
         <>
         <p className="text-blue-400 p-2">Login/SignUP to  view user details.</p>
         <button className="border border-green-600 bg-green-600 text-black px-4 py-2 rounded hover:bg-green-500 mx-16 " onClick={handleLogin}>Register</button>
@@ -183,3 +193,4 @@ const MyComponent = () => {
 };
 
 export default MyComponent;
+

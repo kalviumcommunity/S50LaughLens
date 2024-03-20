@@ -19,17 +19,23 @@ const errorHandler = (error, req, res, next) => {
   console.error("An error occurred:", error);
   res.status(500).json({ error: "Server Error" });
 };
-
 router.get("/", async (req, res, next) => {
   try {
+    const UsernameQ = req.query.Username;
 
-
-    const data = await userModel.find();
-    res.json(data);
+    if (UsernameQ) {
+      const user = await userModel.findOne({ Username: UsernameQ });
+      return res.json(user);
+    } else {
+      const data = await userModel.find();
+      return res.json(data);
+    }
   } catch (error) {
     next(error);
   }
 });
+
+
 
 router.get("/:id", async (req, res, next) => {
   try {

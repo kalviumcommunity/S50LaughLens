@@ -6,14 +6,12 @@ const Post = () => {
   const [username, setUsername] = useState("");
 
   useEffect(() => {
-    // Function to get cookie value by name
     const getCookie = (name) => {
       const value = `; ${document.cookie}`;
       const parts = value.split(`; ${name}=`);
       if (parts.length === 2) return parts.pop().split(';').shift();
     }
 
-    // Get the value of the "username" cookie
     const usernameCookie = getCookie('username');
     if (usernameCookie) {
       setUsername(usernameCookie);
@@ -24,26 +22,42 @@ const Post = () => {
     register,
     handleSubmit,
     formState: { errors },
-    reset  
+    reset
   } = useForm();
 
   const onSubmit = async (data) => {
     console.log(data);
     try {
+      let fileToPost = data.fileUrl;
+      if (isYouTubeUrl(data.fileUrl)) {
+        const videoId = extractYouTubeVideoId(data.fileUrl);
+        fileToPost = `https://www.youtube.com/embed/${videoId}`;
+      }
+      
       await axios.post("http://localhost:3001/posts", {
         Username: data.username,
-        File: data.fileUrl,
+        File: fileToPost,
         Caption: data.caption,
         Likes: 0,
         Comments: 0,
         Shares: 0,
       });
+      
       console.log("File posted successfully");
-      reset(); 
+      reset();
       window.location.reload();
     } catch (error) {
       console.error("Error posting file:", error);
     }
+  };
+
+  const isYouTubeUrl = (url) => {
+    return url.includes("youtube.com") || url.includes("youtu.be");
+  };
+
+  const extractYouTubeVideoId = (url) => {
+    const match = url.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([^&]+)/);
+    return match[1];
   };
 
   return (
@@ -93,6 +107,7 @@ const Post = () => {
           />
           
         </div>
+        <p className="text-purple-400 text-center text-sm">(Double click to post)</p>
         <button
           type="submit"
           className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
