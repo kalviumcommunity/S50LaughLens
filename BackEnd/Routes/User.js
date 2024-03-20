@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const Joi = require("joi"); 
 const userModel = require("../Schema/UserModel");
+const jwt = require('jsonwebtoken')
+require('dotenv').config(); 
+const app = express()
 
 router.use(express.json());
 
@@ -19,6 +22,8 @@ const errorHandler = (error, req, res, next) => {
 
 router.get("/", async (req, res, next) => {
   try {
+
+
     const data = await userModel.find();
     res.json(data);
   } catch (error) {
@@ -43,7 +48,25 @@ router.get("/:id", async (req, res, next) => {
 
 router.post("/", async (req, res, next) => {
   try {
-    const validationResult = userSchema.validate(req.body); // Validate user input
+    const validationResult = userSchema.validate(req.body); 
+    const { Username ,name,Password,Email} = req.body;
+
+    const tokenPayload = {
+      Username,
+      name,
+      Password,
+      Email
+    };
+
+    const secretKey = process.env.SECRET_KEY; 
+  
+      const token = jwt.sign(tokenPayload, secretKey)
+
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: true, 
+        sameSite: 'strict' 
+      });
 
     if (validationResult.error) {
       return res
@@ -64,7 +87,7 @@ router.post("/", async (req, res, next) => {
     }
 
     const data = await userModel.create(req.body);
-    res.json(data);
+    res.json(token);
   } catch (err) {
     next(err);
   }

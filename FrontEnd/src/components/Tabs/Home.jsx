@@ -29,6 +29,7 @@ function Home() {
     const fetchData = async () => {
       try {
         const res = await axios.get("http://localhost:3001/posts");
+        console.log(res.data)
         const shuffledData = res.data.sort(() => Math.random() - 0.5);
         setData(shuffledData);
       } catch (error) {
@@ -87,14 +88,12 @@ function Home() {
     data.Caption.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Function to get cookie value by name
   const getCookie = (name) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
-  // Get the value of the "Username" cookie
   const usernameCookie = getCookie('username');
 
   return (

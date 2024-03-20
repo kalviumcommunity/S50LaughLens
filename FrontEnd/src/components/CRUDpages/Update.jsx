@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function Update({ postId }) {
   const [formData, setFormData] = useState({
     Caption: ''
-  });
+  })
+
+  
+  
+  ;
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const reload=()=>{
+    window.location.reload()
+  }
   
 
   const handleSubmit = async (e) => {
@@ -18,6 +27,7 @@ function Update({ postId }) {
       console.log('Form Data:', formData); 
       const res = await axios.put(`http://localhost:3001/posts/${postId}`, formData);
       console.log('Post updated successfully:', res.data);
+      reload()
     } catch (error) {
       console.error('Error updating post:', error);
     }
@@ -45,7 +55,9 @@ function Update({ postId }) {
         <button
           type="submit"
           className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
+       
         >
+   
           Update
         </button>
       </form>
