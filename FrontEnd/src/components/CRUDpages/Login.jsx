@@ -32,7 +32,6 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Check if the entered username exists in the usersData array
     const user = usersData.find(user => user.Username === formData.Username);
 
     if (user) {
@@ -40,10 +39,10 @@ function Login() {
         document.cookie = `username=${formData.Username};`;
         alert('Logged in');
       } else {
-        alert('Incorrect password');
+        setErrors({ Password: 'Incorrect password' });
       }
     } else {
-      alert('User not found');
+      setErrors({ Username: 'User not found' });
     }
   };
 
@@ -82,7 +81,6 @@ function Login() {
           />
           {errors.Username && <p className='text-red-500'>{errors.Username}</p>}
 
-
           <input
             className='w-full px-4 py-2 border rounded-md focus:outline-none focus:border-blue-500'
             type='password'
@@ -93,7 +91,6 @@ function Login() {
             required
           />
           {errors.Password && <p className='text-red-500'>{errors.Password}</p>}
-
 
         </div>
         <button
