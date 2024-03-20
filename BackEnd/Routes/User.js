@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Joi = require("joi"); // Import Joi for validation
+const Joi = require("joi"); 
 const userModel = require("../Schema/UserModel");
 
 router.use(express.json());
@@ -9,7 +9,7 @@ const userSchema = Joi.object({
   Username: Joi.string().alphanum().min(3).max(30).required(),
   name: Joi.string().min(3).max(30).required(),
   Password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).required(),
-  Email: Joi.string().email().required(), // Add email validation
+  Email: Joi.string().email().required(), 
 });
 
 const errorHandler = (error, req, res, next) => {
