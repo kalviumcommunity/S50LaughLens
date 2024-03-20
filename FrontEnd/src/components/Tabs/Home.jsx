@@ -93,14 +93,9 @@ function Home() {
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(";").shift();
   };
-
-<<<<<<< HEAD
+  
   const usernameCookie = getCookie("username");
-=======
-  const usernameCookie = getCookie('username');
->>>>>>> jwt
-
-  return (
+    return (
     <div className="relative bg-gradient-to-r from-blue-950 to-green-800 text-gray-300 pb-10">
       <div className="fixed bg-gradient-radial left-0 top-0 h-screen bg-blue-950 text-white flex flex-col w-32 text-sm pt-6">
         {tabs.map((tab, index) => (
