@@ -8,11 +8,11 @@ function SignUpForm() {
     Username: "",
     name: "",
     Password: "",
-    Email: "", // Added Email field
+    Email: "", 
   });
 
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState({}); // State to hold validation errors
+  const [errors, setErrors] = useState({}); 
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,22 +38,19 @@ function SignUpForm() {
         "http://localhost:3001/users",
         formData
       );
-      // console.log(response.data)
       cookies.set("token",response.data)
 
       console.log(formData);
       alert(`Account created for ${response.data.username}`);
 
-      // Saving username in a cookie
-      document.cookie = `username=${formData.Username}; max-age=3600`; // Cookie expires in 1 hour
+      document.cookie = `username=${formData.Username}; max-age=3600`;
     } catch (error) {
       if (error.response && error.response.status === 400) {
         const { error: validationError } = error.response.data;
-        // Set validation errors based on the field names
         setErrors({ ...validationError });
       } else {
         console.error("Error:", error);
-        alert("An error occurred. Please try again."); // Display generic error message
+        alert("An error occurred. Please try again."); 
       }
     }
   };
