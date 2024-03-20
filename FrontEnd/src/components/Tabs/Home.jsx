@@ -180,7 +180,7 @@ function Home() {
                         className="inline-flex justify-center items-center p-2 text-gray-400 hover:text-gray-500 focus:outline-none focus:text-gray-500"
                       >
                         <img src={ham} alt="" className="w-7" />
-                      </button>
+                      </button> 
                       {dropdownStates[data._id] && (
                         <div
                           ref={(ref) => (dropdownRefs.current[data._id] = ref)}
