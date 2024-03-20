@@ -7,10 +7,7 @@ const Logout = () => {
 };
 
 const MyComponent = () => {
-  const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
-  const [entities, setEntities] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
 
   const getCookie = (name) => {
     const cookieValue = document.cookie
@@ -21,65 +18,6 @@ const MyComponent = () => {
   };
 
   const usernameCookie = getCookie("username");
-
-  useEffect(() => {
-    const fetchCurrentUser = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/users?Username=${usernameCookie}`
-        );
-        setCurrentUser(response.data[0]); // Since it's expected to return a single user
-      } catch (error) {
-        console.error("Error fetching currentUser:", error);
-      }
-    };
-
-    if (usernameCookie) {
-      fetchCurrentUser();
-    } else {
-      setCurrentUser(null); // Set current user to null if no username cookie found
-    }
-  }, [usernameCookie]);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await axios.get("http://localhost:3001/users");
-        setUsers(response.data);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
-
-    fetchUsers();
-  }, []);
-
-  useEffect(() => {
-    const fetchEntities = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/posts?Username=${selectedUser}`
-        );
-        setEntities(response.data);
-      } catch (error) {
-        console.error("Error fetching entities:", error);
-      }
-    };
-
-    if (selectedUser) {
-      fetchEntities();
-    } else {
-      setEntities([]);
-    }
-  }, [selectedUser]);
-
-  const handleUserChange = (e) => {
-    setSelectedUser(e.target.value);
-  };
-
-  const handleLogin = () => {
-    window.location.href = "/login";
-  };
 
   const renderUserDetails = () => {
     return (
