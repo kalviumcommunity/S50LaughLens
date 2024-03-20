@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import Trendingz from "./Trendingz";
 import Profile from "./Profile";
 import Upload from "../assets/upload.png";
 import Login from "../assets/Login.png";
@@ -23,7 +22,6 @@ function Home() {
 
   const tabs = [
     { label: "Home", image: Homee },
-    { label: "Trending", image: Upload },
     { label: "Profile", image: Login },
   ];
 
@@ -90,14 +88,12 @@ function Home() {
     data.Caption.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Function to get cookie value by name
   const getCookie = (name) => {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
-  // Get the value of the "Username" cookie
   const usernameCookie = getCookie('username');
 
   return (
@@ -224,8 +220,7 @@ function Home() {
             </div>
           </div>
         )}
-        {selectedTab === 1 && <Trendingz />}
-        {selectedTab === 2 && <Profile tab />}
+        {selectedTab === 1 && <Profile tab />}
       </div>
       {showPostPopup && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
