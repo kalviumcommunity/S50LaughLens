@@ -1,7 +1,6 @@
 #### S50LaughLens
 ## List of People with the Funniest Laughs
-#### [LandingPage](https://laughlens.pages.dev/)
-#### [BackEnd](https://laughlens.onrender.com/ping)
+
 ### Description:
 LaughLens is an exciting project aimed at creating a vibrant online community focused on sharing amusing videos and memes that showcase people with the most infectious laughs. Designed for entertainment enthusiasts, the platform encourages users to submit, discover, and engage with humorous content.
 ### Features:
