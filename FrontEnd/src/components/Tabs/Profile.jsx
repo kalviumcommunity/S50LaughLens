@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Logout = () => {
-    document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    window.location.href = "/home";
-  };
+  // Clear cookie and redirect
+  document.cookie = 'username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+  window.location.href = "/home"; // Consider using useNavigate instead
+};
 
 const MyComponent = () => {
   const [users, setUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
-
   const [entities, setEntities] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null); 
+  const [currentUser, setCurrentUser] = useState(null);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const getCookie = (name) => {
     const cookieValue = document.cookie
@@ -25,24 +27,20 @@ const MyComponent = () => {
 
   useEffect(() => {
     const fetchCurrentUser = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/users?Username=${usernameCookie}`
-        );
-
-        setCurrentUser(response.data); 
-      } catch (error) {
-        console.error("Error fetching currentUser:", error);
+      if (usernameCookie) {
+        try {
+          const response = await axios.get(`http://localhost:3001/users?Username=${usernameCookie}`);
+          setCurrentUser(response.data);
+        } catch (error) {
+          console.error("Error fetching currentUser:", error);
+        }
+      } else {
+        setCurrentUser(null); // Explicitly set to null if no cookie
       }
     };
 
-    if (usernameCookie) {
-      fetchCurrentUser();
-    } else {
-
-      setCurrentUser();
-    }
-  }, [usernameCookie]); 
+    fetchCurrentUser();
+  }, [usernameCookie]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -59,21 +57,19 @@ const MyComponent = () => {
 
   useEffect(() => {
     const fetchEntities = async () => {
-      try {
-        const response = await axios.get(
-          `http://localhost:3001/posts?Username=${selectedUser}`
-        );
-        setEntities(response.data);
-      } catch (error) {
-        console.error("Error fetching entities:", error);
+      if (selectedUser) {
+        try {
+          const response = await axios.get(`http://localhost:3001/posts?Username=${selectedUser}`);
+          setEntities(response.data);
+        } catch (error) {
+          console.error("Error fetching entities:", error);
+        }
+      } else {
+        setEntities([]);
       }
     };
 
-    if (selectedUser) {
-      fetchEntities();
-    } else {
-      setEntities([]);
-    }
+    fetchEntities();
   }, [selectedUser]);
 
   const handleUserChange = (e) => {
@@ -81,7 +77,7 @@ const MyComponent = () => {
   };
 
   const handleLogin = () => {
-    window.location.href = "/login";
+    navigate("/login"); // Use navigate for routing
   };
 
   const renderUserDetails = () => {
@@ -99,14 +95,12 @@ const MyComponent = () => {
           </button>
         </span>
 
-
-        {currentUser && ( 
+        {currentUser && (
           <>
             <span className="flex justify-around w-60 mb-4">
               <p className="font-semibold">Name:</p>
               <p>{currentUser.name}</p>
             </span>
-
             <span className="mb-4 flex justify-around w-60">
               <p className="font-semibold">Email:</p>
               <p>{currentUser.Email}</p>
@@ -117,8 +111,7 @@ const MyComponent = () => {
                 type="password"
                 value="supersecret"
                 readOnly
-
-                className=" px-4 py-2 rounded-md focus:outline-none focus:border-blue-500 bg-gray-900"
+                className="px-4 py-2 rounded-md focus:outline-none focus:border-blue-500 bg-gray-900"
               />
             </span>
           </>
@@ -132,14 +125,12 @@ const MyComponent = () => {
             id="userSelect"
             value={selectedUser}
             onChange={handleUserChange}
-
-            className="  px-4 py-2 mb-4 rounded-md focus:outline-none focus:border-gray-500 bg-gray-900   text-white"
+            className="px-4 py-2 mb-4 rounded-md focus:outline-none focus:border-gray-500 bg-gray-900 text-white"
           >
-            <option>select user</option>
+            <option value="">select user</option> {/* Set default value */}
             {users.map((user) => (
               <option
-
-                className="text-orange-800 font-semibold "
+                className="text-orange-800 font-semibold"
                 key={user._id}
                 value={user.Username}
               >
@@ -148,44 +139,46 @@ const MyComponent = () => {
             ))}
           </select>
         </h2>
-            {/* Assuming entities is defined */}
-          <div>
-            {entities.map((post) => (
-              <div key={post._id} className="video-container shadow-sm">
-                <h1 className="text-center font-bold text-xl">
-                  {post.Caption}
-                </h1>
-                <iframe
-                  title="YouTube Video"
-                  width="560"
-                  height="315"
-                  src={post.File}
-                  allowFullScreen
-                ></iframe>
-              </div>
-            ))}
-          </div>
+
+        <div>
+          {entities.map((post) => (
+            <div key={post._id} className="video-container shadow-sm">
+              <h1 className="text-center font-bold text-xl">{post.Caption}</h1>
+              <iframe
+                title="YouTube Video"
+                width="560"
+                height="315"
+                src={post.File}
+                allowFullScreen
+              ></iframe>
+            </div>
+          ))}
         </div>
       </div>
     );
   };
 
-    .find((pair) => pair.trim().startsWith("username="));
-  const isLoggedIn = !!usernameCookiePair;
+  const isLoggedIn = !!usernameCookie; // Fixed variable reference
+
   return (
     <div>
       {isLoggedIn ? (
         renderUserDetails()
       ) : (
-        <button
-          className="border border-green-600 bg-green-600 text-black px-4 py-2 rounded hover:bg-green-500 mx-16"
-          onClick={handleLogin}
-        >
-          Login
-        </button>
         <>
-        <p className="text-blue-400 p-2">Login/SignUP to  view user details.</p>
-        <button className="border border-green-600 bg-green-600 text-black px-4 py-2 rounded hover:bg-green-500 mx-16 " onClick={handleLogin}>Register</button>
+          <button
+            className="border border-green-600 bg-green-600 text-black px-4 py-2 rounded hover:bg-green-500 mx-16"
+            onClick={handleLogin}
+          >
+            Login
+          </button>
+          <p className="text-blue-400 p-2">Login/SignUP to view user details.</p>
+          <button
+            className="border border-green-600 bg-green-600 text-black px-4 py-2 rounded hover:bg-green-500 mx-16"
+            onClick={handleLogin}
+          >
+            Register
+          </button>
         </>
       )}
     </div>
@@ -193,4 +186,3 @@ const MyComponent = () => {
 };
 
 export default MyComponent;
-
